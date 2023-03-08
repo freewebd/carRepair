@@ -1,6 +1,7 @@
-<?php class BMW extends Car
+<?php
+
+namespace Car;
+
+class Ford extends Car
 {
-    public function __construct(, , , , ){
-        
-    }
 }

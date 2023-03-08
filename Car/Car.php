@@ -1,4 +1,8 @@
-<?php abstract class Car
+<?php
+
+namespace Car;
+
+abstract class Car
 {
     protected $brand;
     protected $yearProduction;
@@ -8,7 +12,8 @@
     protected $currentBreakdown;
     /* Проблема руля, тип boolean*/
     protected $brokenSteeringWheel;
-    public function __construct($brand, $yearProduction, $color, $producingCountry, $currentBreakdown, $brokenSteeringWheel){
+    public function __construct($brand, $yearProduction, $color, $producingCountry, $currentBreakdown, $brokenSteeringWheel)
+    {
         $this->brand = $brand;
         $this->yearProduction = $yearProduction;
         $this->color = $color;
@@ -16,28 +21,35 @@
         $this->currentBreakdown = $currentBreakdown;
         $this->brokenSteeringWheel = $brokenSteeringWheel;
     }
-    public function getBrand() {
+    public function getBrand()
+    {
         return $this->brand;
-      }
+    }
 
-      public function getYearProduction() {
+    public function getYearProduction()
+    {
         return $this->yearProduction;
-      }
+    }
 
-      public function getProducingCountry() {
+    public function getProducingCountry()
+    {
         return $this->producingCountry;
-      }
+    }
 
-      public function getCurrentBreakdown() {
+    public function getCurrentBreakdown()
+    {
         return $this->currentBreakdown;
-      }
-      public function getBrokenSteeringWheel() {
+    }
+    public function getBrokenSteeringWheel()
+    {
         return $this->brokenSteeringWheel;
-      }
-      public function setCurrentBreakdown($currentBreakdown) {
+    }
+    public function setCurrentBreakdown($currentBreakdown)
+    {
         $this->currentBreakdown = $currentBreakdown;
-      }
-      public function setBrokenSteeringWheel($brokenSteeringWheel) {
+    }
+    public function setBrokenSteeringWheel($brokenSteeringWheel)
+    {
         $this->brokenSteeringWheel = $brokenSteeringWheel;
-      }
+    }
 }

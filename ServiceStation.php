@@ -1,4 +1,8 @@
 <?php
+
+use Car\Car;
+use Employee\Employee;
+
 class ServiceStation
 {
     public $employees = [];
@@ -7,20 +11,31 @@ class ServiceStation
 
     /* Авто заїжджає на Сто, функція приймає обєкт Сar 
     і зберігає в зміну $car*/
-    public function carEnters()
+    public function carEnters(Car $car)
     {
+        $this->car = $car;
     }
     /* Функція додає робітників, що працють на зміні 
     в $employees  */
-    public function addEmployee()
+    public function addEmployee(Employee ...$employee)
     {
+        $this->employees = $employee;
     }
     /* Пошук вільного робітника серед масиву $employees.
     Записуємо в властивість currentEmployee обєкт що проходить перевірку 
     спеціалізації і вільний для ремонту*/
     public function findFreeWorker()
     {
+        foreach ($this->employees as $employee) {
+            if ($employee->canRepairCar($this->car) && $employee->getIsFree()) {
+                $this->currentEmployee = $employee;
+                $this->currentEmployee->setIsFree = false;
+                break;
+
+            }
+        }
     }
+
     /* Працівник бере замовлення. У властивості $currentEmployee змінюємо 
     isFree на false */
     public function tookOrderWorker()

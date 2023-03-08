@@ -1,11 +1,16 @@
 <?php
+
+namespace Employee;
+use Car\Car;
+
 abstract class Employee
 {
     protected $hourlyPrice;
     protected $isFree;
-    protected $specialization;
+    protected $specialization = [];
     protected $diagnosticPrice;
-    public function __construct($hourlyPrice, $isFree, $specialization, $diagnosticPrice){
+    public function __construct($hourlyPrice, $isFree, $specialization, $diagnosticPrice)
+    {
         $this->hourlyPrice = $hourlyPrice;
         $this->isFree = $isFree;
         $this->specialization = $specialization;
@@ -16,8 +21,10 @@ abstract class Employee
     Приймає обєкт автомобіля. Буде використовувати властивості авто: рік,
     модель, та вид поломки. Повертає значенння типу boolean.
     */
-    public function canRepairCar($car)
+    public function canRepairCar(Car $car)
     {
+        debug($car);
+        return true;
     }
     public function getHourlyPrice()
     {
