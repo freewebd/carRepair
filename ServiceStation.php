@@ -27,11 +27,9 @@ class ServiceStation
     public function findFreeWorker()
     {
         foreach ($this->employees as $employee) {
-            if ($employee->canRepairCar($this->car) && $employee->getIsFree()) {
+            if ($employee->getIsFree() && $employee->canRepairCar($this->car)) {
                 $this->currentEmployee = $employee;
-                $this->currentEmployee->setIsFree = false;
                 break;
-
             }
         }
     }
@@ -40,34 +38,46 @@ class ServiceStation
     isFree на false */
     public function tookOrderWorker()
     {
+        if (!$this->currentEmployee) {
+            return $this->failureRepair();
+        }
+        $this->currentEmployee->setIsFree = false;
     }
     /** Вивести повідомлення, якщо не знайдено вільних робіткників, 
      * або не має робітників, що відповідають спеціалізації 
      */
     public function failureRepair()
     {
+        exit("Відсутні вільні працівники, що відповідають потрібній спеціалізації ремонту");
     }
     /* Проводиться діагностика авто, на якій визначається
     чи є поломка руля в обєкта Car.
-    При true відмова ремонту і проведення розрахунку
-    діагностики, при false 
+    При false відмова ремонту і проведення розрахунку
+    діагностики, при true 
     працівник приступає до ремонту*/
     public function diagnose()
     {
+        if (!$this->car->getBrokenSteeringWheel()) {
+            return $this->repair();
+        }
+        exit("Прямуйте до іншого СТО, ми не можемо полагодити вашу машину");
     }
     /* Проводиться розрахунок вартості діагностики. 
      */
     public function getDiagnosticCost()
     {
+        return $this->currentEmployee->getDiagnosticPrice();
     }
     /* Проходить ремонт авто при якому в обєкті Car властивість 
     $currentBreakdown змінюється false*/
     public function repair()
     {
+        $this->car->setCurrentBreakdown(false);
     }
     /* Виводиться вартість ремонту автомобіля в залежності 
  від тарифу Employee */
     public function getTotalCost()
     {
+        return $this->currentEmployee->getHourlyPrice() + $this->getDiagnosticCost();
     }
 }

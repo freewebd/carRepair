@@ -1,6 +1,7 @@
 <?php
 
 namespace Employee;
+
 use Car\Car;
 
 abstract class Employee
@@ -23,8 +24,31 @@ abstract class Employee
     */
     public function canRepairCar(Car $car)
     {
-        debug($car);
-        return true;
+        foreach ($this->specialization as $specialization) {
+            switch ($specialization) {
+                case "universal":
+                    return true;
+                case "new_2005":
+                    if ($car->getYearProduction() > 2005)
+                        return true;
+                case "Germany":
+                    if ($car->getProducingCountry() === "Germany")
+                        return true;
+                case "old_1998":
+                    if ($car->getYearProduction() < 1988)
+                        return true;
+                case "Japan":
+                    if ($car->getProducingCountry() === "Japan")
+                        return true;
+                case "motor":
+                    if ($car->getCurrentBreakdown() === "motor")
+                        return true;
+                case "Audi":
+                    if ($car->getBrand() === "Audi")
+                        return true;
+            }
+        }
+        return false;
     }
     public function getHourlyPrice()
     {
@@ -37,6 +61,10 @@ abstract class Employee
     public function getSpecialization()
     {
         return $this->specialization;
+    }
+    public function getDiagnosticPrice()
+    {
+        return $this->diagnosticPrice;
     }
     public function setIsFree($isFree)
     {
