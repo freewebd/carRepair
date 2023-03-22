@@ -4,52 +4,41 @@ namespace Car;
 
 abstract class Car
 {
-    protected $brand;
-    protected $yearProduction;
-    protected $color;
-    protected $producingCountry;
-    /* Поточна поломка з якою водій їде в СТО*/
-    protected $currentBreakdown;
-    /* Проблема руля, тип boolean*/
-    protected $brokenSteeringWheel;
-    public function __construct($brand, $yearProduction, $color, $producingCountry, $currentBreakdown, $brokenSteeringWheel)
+    protected $properties = [];
+    public function __construct(array $properties)
     {
-        $this->brand = $brand;
-        $this->yearProduction = $yearProduction;
-        $this->color = $color;
-        $this->producingCountry = $producingCountry;
-        $this->currentBreakdown = $currentBreakdown;
-        $this->brokenSteeringWheel = $brokenSteeringWheel;
+        $this->properties['brand'] = $properties['brand'];
+        $this->properties['yearProduction'] = $properties['yearProduction'];
+        $this->properties['color'] = $properties['color'];
+        $this->properties['producingCountry'] = $properties['producingCountry'];
+        $this->properties['currentBreakdown'] = $properties['currentBreakdown'];
+        $this->properties['brokenSteeringWheel'] = $properties['brokenSteeringWheel'];
     }
     public function getBrand()
     {
-        return $this->brand;
+        return $this->properties['brand'];
     }
 
     public function getYearProduction()
     {
-        return $this->yearProduction;
+        return $this->properties['yearProduction'];
     }
 
     public function getProducingCountry()
     {
-        return $this->producingCountry;
+        return $this->properties['producingCountry'];
     }
 
     public function getCurrentBreakdown()
     {
-        return $this->currentBreakdown;
+        return $this->properties['currentBreakdown'];
     }
     public function getBrokenSteeringWheel()
     {
-        return $this->brokenSteeringWheel;
+        return $this->properties['brokenSteeringWheel'];
     }
     public function setCurrentBreakdown($currentBreakdown)
     {
-        $this->currentBreakdown = $currentBreakdown;
-    }
-    public function setBrokenSteeringWheel($brokenSteeringWheel)
-    {
-        $this->brokenSteeringWheel = $brokenSteeringWheel;
+        $this->properties['currentBreakdown'] = $currentBreakdown;
     }
 }

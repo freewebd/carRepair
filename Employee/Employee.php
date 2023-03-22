@@ -6,16 +6,13 @@ use Car\Car;
 
 abstract class Employee
 {
-    protected $hourlyPrice;
-    protected $isFree;
-    protected $specialization = [];
-    protected $diagnosticPrice;
-    public function __construct($hourlyPrice, $isFree, $specialization, $diagnosticPrice)
+    protected $properties = [];
+    public function __construct(array $properties)
     {
-        $this->hourlyPrice = $hourlyPrice;
-        $this->isFree = $isFree;
-        $this->specialization = $specialization;
-        $this->diagnosticPrice = $diagnosticPrice;
+        $this->properties['hourlyPrice'] = $properties['hourlyPrice'];
+        $this->properties['isFree'] = $properties['isFree'];
+        $this->properties['specialization'] = $properties['specialization'];
+        $this->properties['diagnosticPrice'] = $properties['diagnosticPrice'];
     }
 
     /* Функція повинна перевіряти можливість ремонту авто.
@@ -24,7 +21,7 @@ abstract class Employee
     */
     public function canRepairCar(Car $car)
     {
-        foreach ($this->specialization as $specialization) {
+        foreach ($this->properties['specialization'] as $specialization) {
             switch ($specialization) {
                 case "universal":
                     return true;
@@ -50,24 +47,39 @@ abstract class Employee
         }
         return false;
     }
+    /*Метод діагностики авто. Приймає клас автомобіля. 
+    Перевіряє чи є присутня поломка руля $car->brokenSteeringWheel.
+    Повертає значенння типу boolean 
+    */
+    public function diagnoseCar(Car $car)
+    {
+        return $car->getBrokenSteeringWheel() ?  true :  false;
+    }
+    /*Метод ремонту авто. Приймає клас автомобіля. 
+    Змінює значення поломки $car->currentBreakdown на false.
+    */
+    public function repairCar(Car $car)
+    {
+        $car->setCurrentBreakdown(false);
+    }
     public function getHourlyPrice()
     {
-        return $this->hourlyPrice;
+        return $this->properties['hourlyPrice'];
     }
     public function getIsFree()
     {
-        return $this->isFree;
+        return $this->properties['isFree'];
     }
     public function getSpecialization()
     {
-        return $this->specialization;
+        return $this->properties['specialization'];
     }
     public function getDiagnosticPrice()
     {
-        return $this->diagnosticPrice;
+        return $this->properties['diagnosticPrice'];
     }
     public function setIsFree($isFree)
     {
-        $this->isFree = $isFree;
+        $this->properties['isFree'] = $isFree;
     }
 }

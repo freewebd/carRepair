@@ -22,20 +22,78 @@ spl_autoload_register(function ($class_name) {
     include $class_name . '.php';
 });
 
-$car = new BMW('BMW', 2007, 'red', 'Germany', 'transmision', false);
+$car = new BMW([
+    'brand' => 'BMW',
+    'yearProduction' => '2007',
+    'color' => 'red',
+    'producingCountry' => 'Germany',
+    'currentBreakdown' => 'transmision',
+    'brokenSteeringWheel' => false,
+]);
+echo "Пареметри авто до ремонту:";
+debug($car);
 $serviceStantion = new ServiceStation();
 $serviceStantion->carEnters($car);
 $serviceStantion->addEmployee(
-    new Anton(1000, false, ['universal'], 100),
-    new Artem(1000, false, ['universal'], 150),
-    new Ihor(800, false, ['new_2005'], 50),
-    new Nazar(800, false, ['Germany'], 60),
-    new Oleh(600, false, ['old_1998'], 30),
-    new Taras(800, true, ['Japan', 'motor'], 60),
-    new Victor(800, true, ['Audi', 'universal'], 60),
+    new Anton(
+        [
+            'hourlyPrice' => 1000,
+            'isFree' => false,
+            'specialization' => ['universal'],
+            'diagnosticPrice' => 100,
+        ]
+    ),
+    new Artem(
+        [
+            'hourlyPrice' => 1000,
+            'isFree' => false,
+            'specialization' => ['universal'],
+            'diagnosticPrice' => 150,
+        ]
+    ),
+    new Ihor(
+        [
+            'hourlyPrice' => 800,
+            'isFree' => true,
+            'specialization' => ['new_2005'],
+            'diagnosticPrice' => 50,
+        ]
+    ),
+    new Nazar(
+        [
+            'hourlyPrice' => 800,
+            'isFree' => false,
+            'specialization' => ['Germany'],
+            'diagnosticPrice' => 60,
+        ]
+    ),
+    new Oleh(
+        [
+            'hourlyPrice' => 600,
+            'isFree' => false,
+            'specialization' => ['old_1998'],
+            'diagnosticPrice' => 30,
+        ]
+    ),
+    new Taras(
+        [
+            'hourlyPrice' => 800,
+            'isFree' => true,
+            'specialization' => ['Japan', 'motor'],
+            'diagnosticPrice' => 60,
+        ]
+    ),
+    new Victor(
+        [
+            'hourlyPrice' => 800,
+            'isFree' => true,
+            'specialization' => ['Audi', 'universal'],
+            'diagnosticPrice' => 60,
+        ]
+    ),
 );
 $serviceStantion->findFreeWorker();
 $serviceStantion->tookOrderWorker();
-$serviceStantion->diagnose();
-
-echo 'Загальна вартість ремонту ' . $serviceStantion->car->getBrand() . ': ' . $serviceStantion->getTotalCost();
+$serviceStantion->order();
+echo "<hr>Пареметри авто після ремонту:";
+debug($car);

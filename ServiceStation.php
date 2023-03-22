@@ -41,7 +41,7 @@ class ServiceStation
         if (!$this->currentEmployee) {
             return $this->failureRepair();
         }
-        $this->currentEmployee->setIsFree = false;
+        $this->currentEmployee->setIsFree(false);
     }
     /** Вивести повідомлення, якщо не знайдено вільних робіткників, 
      * або не має робітників, що відповідають спеціалізації 
@@ -50,30 +50,28 @@ class ServiceStation
     {
         exit("Відсутні вільні працівники, що відповідають потрібній спеціалізації ремонту");
     }
-    /* Проводиться діагностика авто, на якій визначається
-    чи є поломка руля в обєкта Car.
-    При false відмова ремонту і проведення розрахунку
-    діагностики, при true 
-    працівник приступає до ремонту*/
-    public function diagnose()
+    /*order(Car $car), що обєднує процес діагностики і ремонту авто. Спочатку визиває метод $this->currentEmployee->diagnoseCar(Car $car), який виконує перевірку чи можливо провести ремонт.
+Якщо руль не поломаний - продовжує ремонт при якому викликається метод $this->currentEmployee->repairCar(Car $car).
+Якщо руль зломаний - повертає false 
+і припиняє ремонт*/
+    public function order()
     {
-        if (!$this->car->getBrokenSteeringWheel()) {
-            return $this->repair();
+        if ($this->currentEmployee->diagnoseCar($this->car)) {
+            echo "Вартість діагностики авто: " . $this->getDiagnosticCost() . '.<br>';
+            exit("Прямуйте до іншого СТО, ми не можемо полагодити вашу машину");
         }
-        exit("Прямуйте до іншого СТО, ми не можемо полагодити вашу машину");
+
+        $this->currentEmployee->repairCar($this->car);
+        echo 'Загальна вартість ремонту ' . $this->car->getBrand() . ': ' . $this->getTotalCost() .'<br>';
     }
+
     /* Проводиться розрахунок вартості діагностики. 
      */
     public function getDiagnosticCost()
     {
         return $this->currentEmployee->getDiagnosticPrice();
     }
-    /* Проходить ремонт авто при якому в обєкті Car властивість 
-    $currentBreakdown змінюється false*/
-    public function repair()
-    {
-        $this->car->setCurrentBreakdown(false);
-    }
+
     /* Виводиться вартість ремонту автомобіля в залежності 
  від тарифу Employee */
     public function getTotalCost()
