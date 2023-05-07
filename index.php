@@ -30,7 +30,7 @@ $car = new BMW([
     'currentBreakdown' => 'transmision',
     'brokenSteeringWheel' => false,
 ]);
-echo "Пареметри авто до ремонту:";
+echo "Парaметри авто до ремонту:";
 debug($car);
 $serviceStantion = new ServiceStation();
 $serviceStantion->carEnters($car);
